@@ -1,24 +1,33 @@
-import openpyxl
+import firebase_admin
+from firebase_admin import credentials,firestore
 import time
 import pypyodbc
-from openpyxl import Workbook,load_workbook
 
-class excel_db:
+class firebase_db:
+    i=3
     def __init__(self):
-        self.workbook = load_workbook("urun_bilgi.xlsx")
-        self.sheet = self.workbook.active
+        cred = credentials.Certificate("servisAccount.json")
+        firebase_admin.initialize_app(cred)
+        self.db=firestore.client()
     def veri_oku(self):
-        for satir in range(1, self.sheet.max_row + 1):
-            for sutun in range(1, self.sheet.max_column + 1):
-                print(" | " + str(self.sheet.cell(satir, sutun).value) + " | ", end="")
-            print()
+        goruntule = list(self.db.collection(u'urunler').get())
+        for snap in goruntule:
+            print(snap.to_dict())
     def veri_ekle(self):
+        self.i += 1
+        document_name = 'urun_bilgi' + str(self.i)
         urun_id = int(input('Urun id giriniz: '))
         urun_adi = input('Urun adi giriniz: ')
         urun_fiyat = int(input('Urun fiyati giriniz: '))
         urun_stok = int(input('Urun stok giriniz: '))
-        self.sheet.append([urun_id, urun_adi, urun_fiyat, urun_stok])
-
+        data = {'urunID': urun_id, 'urunAdi': urun_adi,'urunFiyat': urun_fiyat,'urunStok': urun_stok}
+        self.db.collection(u'urunler').document(document_name).set(data)
+    def say(self):
+        dizi=[]
+        alovelaceDocumentRef = self.db.document('urunler/urun_bilgi')
+        dizi.append(alovelaceDocumentRef)
+        for i in dizi:
+            print(i)
 
 class mssql_db:
     def  __init__(self):
@@ -46,44 +55,44 @@ class mssql_db:
         self.imlec.execute(sorgu,(urun_id,urun_adi,urun_fiyat,urun_stok))
         self.imlec.commit()
 
-class db_adapter(excel_db):
-    new_db = mssql_db()
-    def veri_oku(self):
-        self.new_db.urun_goster()
-    def veri_ekle(self):
-        self.new_db.urun_ekle()
+class db_adapter(mssql_db):
+    fb=firebase_db()
+    def urun_goster(self):
+        self.fb.veri_oku()
+    def urun_ekle(self):
+        self.fb.veri_ekle()
+
 
 if __name__ == '__main__':
-    excel_database=excel_db()
+    new_db=mssql_db()
     adapter=db_adapter()
     print('* URUN * BILGI * SISTEMI *')
     while True:
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-        secim = input("Cikis icin Q, \nExcel islemleri icin E, \nMSSQL islemleri icin S'ye basiniz: ")
+        secim = input("Cikis icin Q, \nFirebase islemleri icin F, \nMSSQL islemleri icin S'ye basiniz: ")
         if secim == 'Q' or secim == 'q':
             print('Program sonlandiriliyor...')
             time.sleep(2)
             break
-        elif secim == 'E' or secim == 'e':
+        elif secim == 's' or secim == 'S':
             islem = input('1. Urunleri goster \n2. Urun ekle \nBir secim yapiniz: ')
             if islem == '1':
-                excel_database.veri_oku()
+                new_db.urun_goster()
             elif islem=='2':
-                excel_database.veri_ekle()
+                new_db.urun_ekle()
                 print('Urun ekleniyor...')
                 time.sleep(2)
                 print('Urun eklendi...')
             else: print('Hatali islem secimi...')
-        elif secim == 'S' or secim == 's':
+        elif secim == 'f' or secim == 'F':
             islem = input('1. Urunleri goster \n2. Urun ekle \nBir secim yapiniz: ')
             if islem == '1':
-                adapter.veri_oku()
+                adapter.urun_goster()
             elif islem=='2':
-                adapter.veri_ekle()
+                adapter.urun_ekle()
                 print('Urun ekleniyor...')
                 time.sleep(2)
                 print('Urun eklendi...')
             else: print('Hatali islem secimi...')
         else: print('Hatali secim yaptiniz...')
-
 
