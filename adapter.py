@@ -22,12 +22,7 @@ class firebase_db:
         urun_stok = int(input('Urun stok giriniz: '))
         data = {'urunID': urun_id, 'urunAdi': urun_adi,'urunFiyat': urun_fiyat,'urunStok': urun_stok}
         self.db.collection(u'urunler').document(document_name).set(data)
-    def say(self):
-        dizi=[]
-        alovelaceDocumentRef = self.db.document('urunler/urun_bilgi')
-        dizi.append(alovelaceDocumentRef)
-        for i in dizi:
-            print(i)
+
 
 class mssql_db:
     def  __init__(self):
