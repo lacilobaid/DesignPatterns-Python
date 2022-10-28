@@ -4,7 +4,6 @@ import time
 import pypyodbc
 
 class firebase_db:
-    i=3
     def __init__(self):
         cred = credentials.Certificate("servisAccount.json")
         firebase_admin.initialize_app(cred)
@@ -13,16 +12,18 @@ class firebase_db:
         goruntule = list(self.db.collection(u'urunler').get())
         for snap in goruntule:
             print(snap.to_dict())
-    def veri_ekle(self):
-        self.i += 1
-        document_name = 'urun_bilgi' + str(self.i)
+        print(len(goruntule))
+    def veri_ekle(self, ):
+        doc_len = list(self.db.collection(u'urunler').get())
+        i = len(doc_len)
+        i += 1
+        document_name = 'urun_bilgi' + str(i)
         urun_id = int(input('Urun id giriniz: '))
         urun_adi = input('Urun adi giriniz: ')
         urun_fiyat = int(input('Urun fiyati giriniz: '))
         urun_stok = int(input('Urun stok giriniz: '))
         data = {'urunID': urun_id, 'urunAdi': urun_adi,'urunFiyat': urun_fiyat,'urunStok': urun_stok}
         self.db.collection(u'urunler').document(document_name).set(data)
-
 
 class mssql_db:
     def  __init__(self):
