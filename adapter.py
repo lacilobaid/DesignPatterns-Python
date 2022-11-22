@@ -2,7 +2,7 @@ import firebase_admin
 from firebase_admin import credentials,firestore
 import time
 import pypyodbc
-
+#mongo
 class firebase_db:
     def __init__(self):
         cred = credentials.Certificate("servisAccount.json")
