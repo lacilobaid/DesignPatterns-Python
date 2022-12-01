@@ -2,10 +2,10 @@ import firebase_admin
 from firebase_admin import credentials,firestore
 import time
 import pypyodbc
-#mongo
+
 class firebase_db:
     def __init__(self):
-        cred = credentials.Certificate("servisAccount.json")
+        cred = credentials.Certificate("jsondosyasi.json")
         firebase_admin.initialize_app(cred)
         self.db=firestore.client()
     def veri_oku(self):
@@ -29,7 +29,7 @@ class mssql_db:
     def  __init__(self):
         yeni_database = pypyodbc.connect(
             'Driver={SQL Server};'
-            'Server=DESKTOP-L5EBS4A\SQLEXPRESS;'
+            'servername;'
             'Database=urun_bilgi;'
             'Trusted_Connection=True;'
         )
