@@ -16,7 +16,7 @@ class Singleton(type):
 class member(metaclass=Singleton):
     def __init__(self):
         try:
-            cred = credentials.Certificate("singletonServer.json")
+            cred = credentials.Certificate("jsondoyasi.json")
             firebase_admin.initialize_app(cred)
             self.db = firestore.client()
         except:
