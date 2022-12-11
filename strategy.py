@@ -2,9 +2,9 @@
 # sehir-blok uzakligi: D4(p, q) = |x-s| + |y-t|
 # satranc tahtasi uzakligi: D8(p, q) = max(|x-s|, |y-t|)
 import time
-from abc import ABC,abstractmethod
+from abc import ABCMeta,abstractmethod
 
-class yol_stratejisi(ABC):
+class yol_stratejisi(metaclass=ABCMeta):
 
     @abstractmethod
     def kullan(self,x,y,s,t): pass
