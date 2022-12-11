@@ -1,2 +1,2 @@
 # DesignPatterns-in-Python
-# Lisans Tezi
+# Lisans Tezi / YBS
