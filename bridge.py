@@ -1,16 +1,16 @@
 import time
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 from smtplib import SMTP
 import mail_login as m
 import requests
 
-class mesaj_gonderen(ABC):
+class mesaj_gonderen(metaclass=ABCMeta):
 
     @abstractmethod
     def mesaj_gonder(self, mesaj): pass
 
 
-class mesaj(ABC):
+class mesaj(metaclass=ABCMeta):
     mesajgonderen : mesaj_gonderen
 
     def __init__(self, mesajgonderen: mesaj_gonderen):
