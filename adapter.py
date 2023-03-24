@@ -13,7 +13,7 @@ class firebase_db:
         for snap in goruntule:
             print(snap.to_dict())
         print(len(goruntule))
-    def veri_ekle(self, ):
+    def veri_ekle(self):
         doc_len = list(self.db.collection(u'urunler').get())
         i = len(doc_len)
         i += 1
