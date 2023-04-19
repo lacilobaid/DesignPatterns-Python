@@ -1,5 +1,4 @@
-# Lisans Tezi / YBS
-
+#### Lisans Tezi
 ## UML
 # Adapter
 <img src="https://user-images.githubusercontent.com/63148309/233108525-f417621b-8dbc-4228-be72-ff1ce40094d4.png" width=50% height=50%>
