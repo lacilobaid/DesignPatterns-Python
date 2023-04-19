@@ -2,7 +2,8 @@
 
 ## UML
 # Adapter
-![Adapter](https://user-images.githubusercontent.com/63148309/233108525-f417621b-8dbc-4228-be72-ff1ce40094d4.png)
+<img src="https://user-images.githubusercontent.com/63148309/233108525-f417621b-8dbc-4228-be72-ff1ce40094d4.png" width=50% height=50%>
+
 
 # Bridge
 ![Bridge](https://user-images.githubusercontent.com/63148309/233109332-2a87e47f-0f50-4395-a7bc-ffdccb7e6e63.png)
