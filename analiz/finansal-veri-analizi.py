@@ -49,7 +49,8 @@ def faiz_aylik(deger,dizi):
         deger.append(eleman)
     
 faiz_aylik(faiz,faiz_deger)
-    
+
+# getiri hesaplarının yapılması
 def getiri_hesapla(dizi,deger):
     for y in deger:
         if deger.index(y) == 0:
@@ -69,6 +70,7 @@ getiri_hesapla(arzm3_getiri,arzm3_deger)
 getiri_hesapla(sue_getiri,sue_deger)
 getiri_hesapla(faiz_getiri,faiz)
 
+# getirilerin tabloya sutun olarak kaydetme
 dataset["rTUPRS"]=np.array(TUPRS_getiri)
 dataset["rBIST100"]=np.array(BIST100_getiri)
 dataset["rKur"]=np.array(kur_getiri)
@@ -79,3 +81,20 @@ dataset["rM2"]=np.array(arzm2_getiri)
 dataset["rM3"]=np.array(arzm3_getiri)
 dataset["rSue"]=np.array(sue_getiri)
 dataset["rAyfaiz"]=np.array(faiz_getiri)
+
+
+# aşırının hesaplanması
+BIST100_asiri = []
+TUPRS_asiri = []
+
+def asiri_hesapla(getiri,faiz,dizi):
+    for j in range(0,154):
+        asiri = getiri[j]-faiz[j]
+        dizi.append(asiri)
+    
+asiri_hesapla(BIST100_getiri,faiz_getiri,BIST100_asiri)
+asiri_hesapla(TUPRS_getiri,faiz_getiri,TUPRS_asiri)   
+
+# aşırıları tabloya sutun olarak kaydetme
+dataset["erBIST100"]=np.array(BIST100_asiri)
+dataset["erTUPRS"]=np.array(TUPRS_asiri)
