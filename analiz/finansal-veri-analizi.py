@@ -98,3 +98,10 @@ asiri_hesapla(TUPRS_getiri,faiz_getiri,TUPRS_asiri)
 # aşırıları tabloya sutun olarak kaydetme
 dataset["erBIST100"]=np.array(BIST100_asiri)
 dataset["erTUPRS"]=np.array(TUPRS_asiri)
+
+# regresyon
+etkenler = dataset[["erBIST100","rKur","rPetrol","rAltin","Enflasyon","rM2","rM3","rSue","rAyfaiz"]]
+
+sabit2 = sm.add_constant(etkenler)
+model_arb = sm.OLS(bagimli_degisken,sabit2).fit()
+model_arb.summary()
