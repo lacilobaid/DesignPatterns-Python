@@ -100,8 +100,9 @@ dataset["erBIST100"]=np.array(BIST100_asiri)
 dataset["erTUPRS"]=np.array(TUPRS_asiri)
 
 # regresyon
+bagimli_degisken=dataset["erTUPRS"]
 etkenler = dataset[["erBIST100","rKur","rPetrol","rAltin","Enflasyon","rM2","rM3","rSue","rAyfaiz"]]
 
-sabit2 = sm.add_constant(etkenler)
-model_arb = sm.OLS(bagimli_degisken,sabit2).fit()
+sabit = sm.add_constant(etkenler)
+model_arb = sm.OLS(bagimli_degisken,sabit).fit()
 model_arb.summary()
