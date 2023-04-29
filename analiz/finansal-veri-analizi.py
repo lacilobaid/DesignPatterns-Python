@@ -16,21 +16,21 @@ arzm3_deger = []
 sue_deger = []
 faiz_deger = []
 
-def deger_oku(dizi,metin):
+def deger_oku(dizi,metin,dataset):
     eleman = dataset[metin].values
     for i in eleman:
         dizi.append(i)
         
-deger_oku(TUPRS_deger,"TUPRS")
-deger_oku(BIST100_deger,"BIST100")
-deger_oku(kur_deger,"USD/TRY")
-deger_oku(petrol_deger,"PETROL")
-deger_oku(altin_deger,"ALTIN")
-deger_oku(tufe_deger,"TUFE")
-deger_oku(arzm2_deger,"M2")
-deger_oku(arzm3_deger,"M3")
-deger_oku(sue_deger,"SUE")
-deger_oku(faiz_deger,"FAIZ")
+deger_oku(TUPRS_deger,"TUPRS",dataset)
+deger_oku(BIST100_deger,"BIST100",dataset)
+deger_oku(kur_deger,"USD/TRY",dataset)
+deger_oku(petrol_deger,"PETROL",dataset)
+deger_oku(altin_deger,"ALTIN",dataset)
+deger_oku(tufe_deger,"TUFE",dataset)
+deger_oku(arzm2_deger,"M2",dataset)
+deger_oku(arzm3_deger,"M3",dataset)
+deger_oku(sue_deger,"SUE",dataset)
+deger_oku(faiz_deger,"FAIZ",dataset)
     
 
 TUPRS_getiri = []
@@ -53,12 +53,12 @@ def faiz_aylik(deger,dizi):
 faiz_aylik(faiz,faiz_deger)
 
 # getiri hesaplarının yapılması
-def getiri_hesapla(dizi,deger):
+def getiri_hesapla(dizi,deger): # pct_change()
     for y in deger:
         if deger.index(y) == 0:
             getiri = 0
         else:
-            getiri = (deger[deger.index(y)] - deger[(deger.index(y))-1]) / deger[(deger.index(y))-1]
+            getiri = np.log(deger[deger.index(y)] / deger[(deger.index(y))-1])
         dizi.append(getiri)
 
 getiri_hesapla(TUPRS_getiri,TUPRS_deger)
@@ -91,7 +91,7 @@ TUPRS_asiri = []
 
 def asiri_hesapla(getiri,faiz,dizi):
     for j in range(0,154):
-        asiri = getiri[j]-faiz[j]
+        asiri = (getiri[j]-faiz[j])*100
         dizi.append(asiri)
     
 asiri_hesapla(BIST100_getiri,faiz_getiri,BIST100_asiri)
