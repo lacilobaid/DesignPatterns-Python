@@ -7,6 +7,7 @@ import seaborn as sns
 from sklearn.linear_model import LinearRegression
 
 dataset = pd.read_excel("finansal_dataset.xlsx")
+dataset_manuel = pd.read_excel("manuel_finansal_dataset.xlsx")
 
 class analiz:
     
@@ -32,7 +33,20 @@ class analiz:
         for j in range(0,154):
             asiri = (getiri[j]-faiz[j])*100
             dizi.append(asiri)
+            
+class model:
     
+    def stats_model(self,bagimli,bagimsiz):
+        sabit = sm.add_constant(bagimsiz)
+        model_arb = sm.OLS(bagimli,sabit).fit()
+        return model_arb.summary()
+        
+    def sk_model(self,bagimli,bagimsiz): 
+        lm = LinearRegression()
+        return lm.fit(bagimsiz,bagimli)
+    
+
+model = model() 
 analiz = analiz()
 
 TUPRS_deger = []
@@ -110,18 +124,19 @@ dataset["erTUPRS"]=np.array(TUPRS_asiri)
 
 # regresyon
 # stats ile model kurma
-bagimli_degisken=dataset["erTUPRS"]
+bagimli_degisken = dataset[["erTUPRS"]]
 etkenler = dataset[["erBIST100","rKur","rPetrol","rAltin","Enflasyon","rM2","rM3","rSue","rAyfaiz"]]
+smodel = model.stats_model(bagimli_degisken,etkenler)
 
-sabit = sm.add_constant(etkenler)
-model_arb = sm.OLS(bagimli_degisken,sabit).fit()
-model_arb.summary()
+
+# manuel 
+bagimli_degisken_manuel =hazir_dataset["ERTUPRS"]
+etkenler_manuel = hazir_dataset[["ERBIST100","RKUR","RPETROL","RALTIN","RTUFE","RM2","RM3","RSUE","RFAIZ"]]
+smodel_manuel = model.stats_model(bagimli_degisken_manuel,etkenler_manuel)
 
 
 # sklearn ile model kurma
-lm = LinearRegression()
-bagimli = dataset[["erTUPRS"]]
-bagimsiz = dataset[["erBIST100","rKur","rPetrol","rSue","rM2","rM3","Enflasyon","rAltin","rAyfaiz"]]
+skmodel= model.sk_model(bagimli_degisken,etkenler)
 
-model = lm.fit(bagimsiz,bagimli)
-
+# manuel
+skmodel_manuel = model.sk_model(bagimli_degisken_manuel,etkenler_manuel)
