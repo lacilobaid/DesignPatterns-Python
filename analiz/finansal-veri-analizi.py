@@ -123,17 +123,16 @@ dataset["erBIST100"]=np.array(BIST100_asiri)
 dataset["erTUPRS"]=np.array(TUPRS_asiri)
 
 # regresyon
-# stats ile model kurma
-bagimli_degisken = dataset[["erTUPRS"]]
-etkenler = dataset[["erBIST100","rKur","rPetrol","rAltin","Enflasyon","rM2","rM3","rSue","rAyfaiz"]]
-smodel = model.stats_model(bagimli_degisken,etkenler)
-
-
-# manuel 
 bagimli_degisken_manuel =hazir_dataset["ERTUPRS"]
 etkenler_manuel = hazir_dataset[["ERBIST100","RKUR","RPETROL","RALTIN","RTUFE","RM2","RM3","RSUE","RFAIZ"]]
-smodel_manuel = model.stats_model(bagimli_degisken_manuel,etkenler_manuel)
+bagimli_degisken = dataset[["erTUPRS"]]
+etkenler = dataset[["erBIST100","rKur","rPetrol","rAltin","Enflasyon","rM2","rM3","rSue","rAyfaiz"]]
 
+# stats ile model kurma
+smodel = model.stats_model(bagimli_degisken,etkenler)
+
+# manuel 
+smodel_manuel = model.stats_model(bagimli_degisken_manuel,etkenler_manuel)
 
 # sklearn ile model kurma
 skmodel= model.sk_model(bagimli_degisken,etkenler)
