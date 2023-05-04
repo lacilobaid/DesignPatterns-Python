@@ -34,6 +34,7 @@ class analiz:
             dizi.append(asiri)
     
 analiz = analiz()
+
 TUPRS_deger = []
 BIST100_deger = []
 kur_deger = []
