@@ -1,6 +1,9 @@
-import numpy as np
+import numpy as np 
 import pandas as pd
+from scipy import stats
 import statsmodels.api as sm
+import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.linear_model import LinearRegression
 
 dataset = pd.read_excel("finansal_dataset.xlsx")
